@@ -33,6 +33,11 @@ public class Window {
     System.out.println("Hello LWGL" + Version.getVersion()+"!");
     init();
     loop();
+    glfwFreeCallbacks(glfwWindow);
+    glfwDestroyWindow(glfwWindow);
+
+    glfwTerminate();
+    glfwSetErrorCallback(null).free();
     }
     public void init(){
         GLFWErrorCallback.createPrint(System.err).set();
