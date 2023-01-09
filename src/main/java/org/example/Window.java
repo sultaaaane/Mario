@@ -53,8 +53,14 @@ public class Window {
 
         glfwWindow = glfwCreateWindow(this.width,this.height,this.title,NULL,NULL);
         if(glfwWindow==NULL){
-            throw new IllegalStateException("failred tp create window");
+            throw new IllegalStateException("failed to create window");
+
         }
+        glfwSetCursorPosCallback(glfwWindow,MouseListener::MousePosCallBack);
+        glfwSetMouseButtonCallback(glfwWindow,MouseListener::MouseButtonCallBack);
+        glfwSetScrollCallback(glfwWindow,MouseListener::MouseScrollCallBack);
+
+
         glfwMakeContextCurrent(glfwWindow);
         glfwSwapInterval(1);
         glfwShowWindow(glfwWindow);
