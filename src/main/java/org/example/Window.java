@@ -16,11 +16,15 @@ public class Window {
     private String title;
     private static Window window = null;
     private Long glfwWindow;
+    private float r,g,b,a;
     private Window(){
        this.height=1920;
        this.width=1080;
        this.title="mario";
-
+        r = 0;
+        b = 0;
+        g = 0;
+        a = 0;
     }
     public static Window get(){
         if(Window.window == null){
@@ -56,10 +60,11 @@ public class Window {
             throw new IllegalStateException("failed to create window");
 
         }
-        glfwSetCursorPosCallback(glfwWindow,MouseListener::MousePosCallBack);
-        glfwSetMouseButtonCallback(glfwWindow,MouseListener::MouseButtonCallBack);
-        glfwSetScrollCallback(glfwWindow,MouseListener::MouseScrollCallBack);
+        glfwSetCursorPosCallback(glfwWindow,MouseListener::mousePosCallback);
+        glfwSetMouseButtonCallback(glfwWindow,MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow,MouseListener::mouseScrollCallback);
 
+        glfwSetKeyCallback(glfwWindow,KeyListener::KeyCallBack);
 
         glfwMakeContextCurrent(glfwWindow);
         glfwSwapInterval(1);
@@ -72,9 +77,11 @@ public class Window {
     while (!glfwWindowShouldClose(glfwWindow)){
         glfwPollEvents();
 
-        glClearColor(1.0f,0.0f,0.0f,1.0f);
+        glClearColor(r,g,b,a);
         glClear(GL_COLOR_BUFFER_BIT);
-
+        if (KeyListener.isKeyPressed(GLFW_KEY_SPACE)){
+            System.out.println("space clicked");
+        }
         glfwSwapBuffers(glfwWindow);
     }
     }
